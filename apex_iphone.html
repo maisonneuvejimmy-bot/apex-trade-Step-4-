@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="APEX TRADE">
+<title>APEX TRADE AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #00ff88;
+    --red: #ff3355;
+    --yellow: #ffd600;
+    --bg: #060a0f;
+    --card: #0d1420;
+    --border: #1a2535;
+    --text: #e0e8f0;
+    --muted: #4a6080;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(180deg, #0a1628 0%, var(--bg) 100%);
+    padding: 54px 20px 16px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .header-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, var(--green), #00ccff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+  }
+
+  .header-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 3px;
+    margin-top: 4px;
+  }
+
+  .key-indicator {
+    position: absolute;
+    top: 54px;
+    right: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid;
+  }
+
+  .key-set { color: var(--green); border-color: var(--green); background: rgba(0,255,136,0.08); }
+  .key-missing { color: var(--red); border-color: var(--red); background: rgba(255,51,85,0.08); }
+
+  /* SETUP SCREEN */
+  .setup-screen {
+    padding: 32px 20px;
+    display: none;
+  }
+
+  .setup-screen.active { display: block; }
+
+  .setup-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+
+  .setup-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  .input-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .api-input {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    outline: none;
+    -webkit-appearance: none;
+    margin-bottom: 16px;
+  }
+
+  .api-input:focus { border-color: var(--green); }
+
+  .btn-primary {
+    width: 100%;
+    background: linear-gradient(135deg, #00cc6a, #00ff88);
+    color: #000;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    margin-bottom: 12px;
+  }
+
+  /* MAIN APP */
+  .main-app { display: none; padding: 20px; }
+  .main-app.active { display: block; }
+
+  /* CAMERA BUTTON */
+  .camera-zone {
+    background: var(--card);
+    border: 2px dashed var(--border);
+    border-radius: 16px;
+    padding: 32px 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+
+  .camera-zone.has-image {
+    border-style: solid;
+    border-color: var(--green);
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .camera-zone img {
+    width: 100%;
+    border-radius: 14px;
+    display: block;
+  }
+
+  .camera-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .camera-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .camera-sub {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  #fileInput { display: none; }
+
+  /* MARKET SELECTOR */
+  .market-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .market-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .market-btn.active {
+    border-color: var(--green);
+    background: rgba(0,255,136,0.08);
+  }
+
+  .market-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--text);
+  }
+
+  .market-btn.active .market-name { color: var(--green); }
+
+  .market-desc {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* ANALYZE BUTTON */
+  .analyze-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #003322, #006644);
+    border: 1px solid var(--green);
+    border-radius: 14px;
+    padding: 18px;
+    color: var(--green);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    margin-bottom: 24px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .analyze-btn:active { transform: scale(0.98); }
+  .analyze-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* LOADING */
+  .loading {
+    display: none;
+    text-align: center;
+    padding: 32px;
+  }
+
+  .loading.active { display: block; }
+
+  .pulse-ring {
+    width: 60px;
+    height: 60px;
+    border: 3px solid var(--green);
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.15); opacity: 0.5; }
+  }
+
+  .loading-text {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--green);
+    letter-spacing: 1px;
+  }
+
+  /* SIGNAL CARD */
+  .signal-card {
+    display: none;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    border: 1px solid;
+  }
+
+  .signal-card.active { display: block; }
+  .signal-card.buy { background: rgba(0,255,136,0.06); border-color: var(--green); }
+  .signal-card.sell { background: rgba(255,51,85,0.06); border-color: var(--red); }
+  .signal-card.wait { background: rgba(255,214,0,0.06); border-color: var(--yellow); }
+
+  .signal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .signal-badge {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    letter-spacing: 3px;
+    line-height: 1;
+  }
+
+  .buy .signal-badge { color: var(--green); }
+  .sell .signal-badge { color: var(--red); }
+  .wait .signal-badge { color: var(--yellow); }
+
+  .confidence-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+  }
+
+  .buy .confidence-badge { background: rgba(0,255,136,0.15); color: var(--green); }
+  .sell .confidence-badge { background: rgba(255,51,85,0.15); color: var(--red); }
+  .wait .confidence-badge { background: rgba(255,214,0,0.15); color: var(--yellow); }
+
+  .signal-levels {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .level-box {
+    background: rgba(255,255,255,0.04);
+    border-radius: 10px;
+    padding: 12px 10px;
+    text-align: center;
+  }
+
+  .level-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .level-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .signal-summary {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 16px;
+    padding: 12px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 10px;
+  }
+
+  .signal-reasons { list-style: none; }
+
+  .signal-reasons li {
+    font-size: 13px;
+    color: var(--muted);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .signal-reasons li:last-child { border-bottom: none; }
+
+  .buy .signal-reasons li::before { content: '▲'; color: var(--green); position: absolute; left: 0; font-size: 8px; top: 9px; }
+  .sell .signal-reasons li::before { content: '▼'; color: var(--red); position: absolute; left: 0; font-size: 8px; top: 9px; }
+  .wait .signal-reasons li::before { content: '●'; color: var(--yellow); position: absolute; left: 0; font-size: 8px; top: 9px; }
+
+  /* TIMESTAMP */
+  .timestamp {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 12px;
+  }
+
+  /* HISTORY */
+  .history-section { margin-bottom: 32px; }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .history-item {
+    background: var(--card);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .history-signal {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+  }
+
+  .history-buy { color: var(--green); }
+  .history-sell { color: var(--red); }
+  .history-wait { color: var(--yellow); }
+
+  .history-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  /* SETTINGS BUTTON */
+  .settings-btn {
+    position: absolute;
+    top: 54px;
+    left: 16px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 8px;
+    color: var(--muted);
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  /* ERROR */
+  .error-box {
+    background: rgba(255,51,85,0.08);
+    border: 1px solid var(--red);
+    border-radius: 10px;
+    padding: 16px;
+    color: var(--red);
+    font-size: 13px;
+    margin-bottom: 20px;
+    display: none;
+  }
+
+  .error-box.active { display: block; }
+
+  /* DISCLAIMER */
+  .disclaimer {
+    font-size: 10px;
+    color: var(--muted);
+    text-align: center;
+    padding: 0 20px 40px;
+    line-height: 1.6;
+  }
+
+  /* RETAKE BUTTON */
+  .retake-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    color: var(--text);
+    font-size: 12px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <button class="settings-btn" onclick="showSettings()" id="settingsBtn" style="display:none">⚙️</button>
+  <div class="header-logo">APEX TRADE</div>
+  <div class="header-sub">AI SIGNAL SYSTEM</div>
+  <div class="key-indicator key-missing" id="keyIndicator">NO KEY</div>
+</div>
+
+<!-- SETUP SCREEN -->
+<div class="setup-screen active" id="setupScreen">
+  <div class="setup-title">Setup Your API Key</div>
+  <div class="setup-desc">Enter your Anthropic API key to power APEX TRADE AI on your iPhone. Your key is stored only on this device — never shared.</div>
+
+  <label class="input-label">ANTHROPIC API KEY</label>
+  <input type="password" class="api-input" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off" autocorrect="off" spellcheck="false">
+
+  <label class="input-label">SELECT YOUR MARKET</label>
+  <div class="market-selector" style="margin-bottom:24px">
+    <div class="market-btn active" id="setupYM" onclick="selectSetupMarket('YM')">
+      <div class="market-name">YM</div>
+      <div class="market-desc">Dow Jones</div>
+    </div>
+    <div class="market-btn" id="setupNQ" onclick="selectSetupMarket('NQ')">
+      <div class="market-name">NQ</div>
+      <div class="market-desc">Nasdaq</div>
+    </div>
+  </div>
+
+  <button class="btn-primary" onclick="saveApiKey()">ACTIVATE APEX TRADE</button>
+
+  <div class="error-box active" id="setupError" style="display:none"></div>
+</div>
+
+<!-- MAIN APP -->
+<div class="main-app" id="mainApp">
+
+  <!-- CAMERA ZONE -->
+  <div class="camera-zone" id="cameraZone" onclick="triggerCamera()">
+    <span class="camera-icon">📸</span>
+    <div class="camera-text">TAP TO PHOTOGRAPH CHART</div>
+    <div class="camera-sub">Point at your TradingView screen</div>
+    <input type="file" id="fileInput" accept="image/*" capture="environment" onchange="handleImage(event)">
+  </div>
+
+  <!-- MARKET SELECTOR -->
+  <div class="market-selector">
+    <div class="market-btn active" id="btnYM" onclick="selectMarket('YM')">
+      <div class="market-name">YM</div>
+      <div class="market-desc">Dow Jones</div>
+    </div>
+    <div class="market-btn" id="btnNQ" onclick="selectMarket('NQ')">
+      <div class="market-name">NQ</div>
+      <div class="market-desc">Nasdaq</div>
+    </div>
+  </div>
+
+  <!-- ERROR -->
+  <div class="error-box" id="errorBox"></div>
+
+  <!-- ANALYZE BUTTON -->
+  <button class="analyze-btn" id="analyzeBtn" onclick="analyzeChart()" disabled>
+    ⚡ ANALYZE CHART
+  </button>
+
+  <!-- LOADING -->
+  <div class="loading" id="loading">
+    <div class="pulse-ring"></div>
+    <div class="loading-text">CLAUDE AI READING CHART...</div>
+  </div>
+
+  <!-- SIGNAL CARD -->
+  <div class="signal-card" id="signalCard">
+    <div class="signal-header">
+      <div class="signal-badge" id="signalBadge">—</div>
+      <div class="confidence-badge" id="confidenceBadge">—</div>
+    </div>
+    <div class="signal-levels">
+      <div class="level-box">
+        <div class="level-label">ENTRY</div>
+        <div class="level-value" id="entryVal">—</div>
+      </div>
+      <div class="level-box">
+        <div class="level-label">TARGET</div>
+        <div class="level-value" id="targetVal">—</div>
+      </div>
+      <div class="level-box">
+        <div class="level-label">STOP</div>
+        <div class="level-value" id="stopVal">—</div>
+      </div>
+    </div>
+    <div class="signal-summary" id="signalSummary"></div>
+    <ul class="signal-reasons" id="signalReasons"></ul>
+    <div class="timestamp" id="signalTime"></div>
+  </div>
+
+  <!-- HISTORY -->
+  <div class="history-section" id="historySection" style="display:none">
+    <div class="section-title">SIGNAL HISTORY</div>
+    <div id="historyList"></div>
+  </div>
+
+</div>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer" id="disclaimer" style="display:none">
+  ⚠️ Not financial advice. All signals are AI-generated analysis only. Always use stop losses. Trade at your own risk.
+</div>
+
+<script>
+  let selectedMarket = 'YM';
+  let currentImage = null;
+  let signalHistory = JSON.parse(localStorage.getItem('apex_history') || '[]');
+
+  // Init
+  window.onload = function() {
+    const key = localStorage.getItem('apex_api_key');
+    if (key) {
+      showMainApp();
+    } else {
+      document.getElementById('setupScreen').classList.add('active');
+    }
+    renderHistory();
+  };
+
+  function showMainApp() {
+    document.getElementById('setupScreen').classList.remove('active');
+    document.getElementById('mainApp').classList.add('active');
+    document.getElementById('disclaimer').style.display = 'block';
+    document.getElementById('settingsBtn').style.display = 'block';
+    document.getElementById('keyIndicator').textContent = 'KEY SET ✓';
+    document.getElementById('keyIndicator').className = 'key-indicator key-set';
+  }
+
+  function showSettings() {
+    document.getElementById('mainApp').classList.remove('active');
+    document.getElementById('disclaimer').style.display = 'none';
+    document.getElementById('setupScreen').classList.add('active');
+    document.getElementById('settingsBtn').style.display = 'none';
+    const key = localStorage.getItem('apex_api_key');
+    if (key) document.getElementById('apiKeyInput').value = key;
+  }
+
+  function selectSetupMarket(m) {
+    selectedMarket = m;
+    document.getElementById('setupYM').classList.toggle('active', m === 'YM');
+    document.getElementById('setupNQ').classList.toggle('active', m === 'NQ');
+  }
+
+  function selectMarket(m) {
+    selectedMarket = m;
+    document.getElementById('btnYM').classList.toggle('active', m === 'YM');
+    document.getElementById('btnNQ').classList.toggle('active', m === 'NQ');
+  }
+
+  function saveApiKey() {
+    const key = document.getElementById('apiKeyInput').value.trim();
+    const errEl = document.getElementById('setupError');
+
+    if (!key.startsWith('sk-ant-')) {
+      errEl.textContent = 'Invalid key. Must start with sk-ant-';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    localStorage.setItem('apex_api_key', key);
+    errEl.style.display = 'none';
+    showMainApp();
+  }
+
+  function triggerCamera() {
+    document.getElementById('fileInput').click();
+  }
+
+  function handleImage(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      currentImage = e.target.result;
+      const zone = document.getElementById('cameraZone');
+      zone.classList.add('has-image');
+      zone.innerHTML = `
+        <img src="${currentImage}" alt="Chart">
+        <button class="retake-btn" onclick="retakePhoto(event)">📸 Retake</button>
+      `;
+      document.getElementById('analyzeBtn').disabled = false;
+      document.getElementById('signalCard').classList.remove('active');
+      document.getElementById('errorBox').classList.remove('active');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function retakePhoto(e) {
+    e.stopPropagation();
+    const zone = document.getElementById('cameraZone');
+    zone.classList.remove('has-image');
+    zone.innerHTML = `
+      <span class="camera-icon">📸</span>
+      <div class="camera-text">TAP TO PHOTOGRAPH CHART</div>
+      <div class="camera-sub">Point at your TradingView screen</div>
+      <input type="file" id="fileInput" accept="image/*" capture="environment" onchange="handleImage(event)">
+    `;
+    currentImage = null;
+    document.getElementById('analyzeBtn').disabled = true;
+  }
+
+  async function analyzeChart() {
+    if (!currentImage) return;
+
+    const apiKey = localStorage.getItem('apex_api_key');
+    if (!apiKey) { showSettings(); return; }
+
+    const marketName = selectedMarket === 'YM' ? 'YM Dow Jones futures' : 'NQ Nasdaq futures';
+
+    document.getElementById('loading').classList.add('active');
+    document.getElementById('analyzeBtn').disabled = true;
+    document.getElementById('signalCard').classList.remove('active');
+    document.getElementById('errorBox').classList.remove('active');
+
+    const base64 = currentImage.split(',')[1];
+    const mediaType = currentImage.split(';')[0].split(':')[1];
+
+    const prompt = `You are an elite futures trading assistant for ${marketName}.
+
+Analyze this TradingView chart screenshot using these rules:
+
+WHAT TO LOOK FOR:
+- Candle/bar color and direction
+- Break of Structure (BOS) — price breaks above recent high or below recent low
+- Change of Character (CHoCH) — momentum shifting direction
+- Order blocks — supply/demand zones
+- EMA direction — sloping up or down
+- Volume confirmation
+- Premium vs discount zones
+
+SIGNAL RULES:
+- BUY only if: BOS bullish + price in discount + EMAs bullish + volume confirming
+- SELL only if: BOS bearish + price in premium + EMAs bearish + volume confirming
+- WAIT if: mixed signals, choppy price, or dead zone 12PM-2PM EST
+
+Respond ONLY in this exact JSON format:
+{
+  "signal": "BUY" or "SELL" or "WAIT",
+  "confidence": "HIGH" or "MEDIUM" or "LOW",
+  "entry": "price level",
+  "target": "price level",
+  "stop": "price level",
+  "summary": "One clear sentence explaining why",
+  "reasons": ["reason 1", "reason 2", "reason 3"]
+}`;
+
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 600,
+          messages: [{
+            role: 'user',
+            content: [
+              { type: 'image', source: { type: 'base64', media_type: mediaType, data: base64 } },
+              { type: 'text', text: prompt }
+            ]
+          }]
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.error) throw new Error(data.error.message);
+
+      const text = data.content[0].text;
+      const clean = text.replace(/```json|```/g, '').trim();
+      const result = JSON.parse(clean);
+
+      displaySignal(result);
+      saveHistory(result);
+
+    } catch (err) {
+      const errBox = document.getElementById('errorBox');
+      errBox.textContent = '❌ Analysis failed: ' + err.message;
+      errBox.classList.add('active');
+    } finally {
+      document.getElementById('loading').classList.remove('active');
+      document.getElementById('analyzeBtn').disabled = false;
+    }
+  }
+
+  function displaySignal(result) {
+    const card = document.getElementById('signalCard');
+    const signal = result.signal;
+
+    card.className = 'signal-card active ' + signal.toLowerCase();
+    document.getElementById('signalBadge').textContent = signal === 'BUY' ? '🟢 BUY' : signal === 'SELL' ? '🔴 SELL' : '⚠️ WAIT';
+    document.getElementById('confidenceBadge').textContent = result.confidence;
+    document.getElementById('entryVal').textContent = result.entry || '—';
+    document.getElementById('targetVal').textContent = result.target || '—';
+    document.getElementById('stopVal').textContent = result.stop || '—';
+    document.getElementById('signalSummary').textContent = result.summary || '';
+    document.getElementById('signalTime').textContent = new Date().toLocaleTimeString();
+
+    const reasonsList = document.getElementById('signalReasons');
+    reasonsList.innerHTML = '';
+    (result.reasons || []).forEach(r => {
+      const li = document.createElement('li');
+      li.textContent = r;
+      reasonsList.appendChild(li);
+    });
+
+    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function saveHistory(result) {
+    const entry = {
+      signal: result.signal,
+      confidence: result.confidence,
+      market: selectedMarket,
+      time: new Date().toLocaleTimeString(),
+      summary: result.summary
+    };
+    signalHistory.unshift(entry);
+    if (signalHistory.length > 10) signalHistory.pop();
+    localStorage.setItem('apex_history', JSON.stringify(signalHistory));
+    renderHistory();
+  }
+
+  function renderHistory() {
+    if (signalHistory.length === 0) return;
+    document.getElementById('historySection').style.display = 'block';
+    const list = document.getElementById('historyList');
+    list.innerHTML = signalHistory.map(h => `
+      <div class="history-item">
+        <div>
+          <div class="history-signal history-${h.signal.toLowerCase()}">${h.signal}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">${h.market} · ${h.confidence}</div>
+        </div>
+        <div class="history-meta">${h.time}</div>
+      </div>
+    `).join('');
+  }
+</script>
+</body>
+</html>
