@@ -13,6 +13,7 @@
     --green: #00ff88;
     --red: #ff3355;
     --yellow: #ffd600;
+    --blue: #00ccff;
     --bg: #060a0f;
     --card: #0d1420;
     --border: #1a2535;
@@ -28,9 +29,9 @@
     font-family: 'IBM Plex Sans', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
+    padding-bottom: 40px;
   }
 
-  /* HEADER */
   .header {
     background: linear-gradient(180deg, #0a1628 0%, var(--bg) 100%);
     padding: 54px 20px 16px;
@@ -71,12 +72,22 @@
   .key-set { color: var(--green); border-color: var(--green); background: rgba(0,255,136,0.08); }
   .key-missing { color: var(--red); border-color: var(--red); background: rgba(255,51,85,0.08); }
 
-  /* SETUP SCREEN */
-  .setup-screen {
-    padding: 32px 20px;
+  .settings-btn {
+    position: absolute;
+    top: 54px;
+    left: 16px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 8px;
+    color: var(--muted);
+    font-size: 14px;
+    cursor: pointer;
     display: none;
   }
 
+  /* SETUP */
+  .setup-screen { padding: 32px 20px; display: none; }
   .setup-screen.active { display: block; }
 
   .setup-title {
@@ -133,69 +144,23 @@
     margin-bottom: 12px;
   }
 
-  /* MAIN APP */
-  .main-app { display: none; padding: 20px; }
+  /* MAIN */
+  .main-app { display: none; padding: 16px; }
   .main-app.active { display: block; }
 
-  /* CAMERA BUTTON */
-  .camera-zone {
-    background: var(--card);
-    border: 2px dashed var(--border);
-    border-radius: 16px;
-    padding: 32px 20px;
-    text-align: center;
-    margin-bottom: 20px;
-    position: relative;
-    transition: border-color 0.2s;
-  }
-
-  .camera-zone.has-image {
-    border-style: solid;
-    border-color: var(--green);
-    padding: 0;
-    overflow: hidden;
-  }
-
-  .camera-zone img {
-    width: 100%;
-    border-radius: 14px;
-    display: block;
-  }
-
-  .camera-icon {
-    font-size: 48px;
-    margin-bottom: 12px;
-    display: block;
-  }
-
-  .camera-text {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    letter-spacing: 2px;
-    color: var(--text);
-    margin-bottom: 6px;
-  }
-
-  .camera-sub {
-    font-size: 13px;
-    color: var(--muted);
-  }
-
-  #fileInput { display: none; }
-
-  /* MARKET SELECTOR */
-  .market-selector {
+  /* MARKET GRID - 4 markets */
+  .market-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 20px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
   }
 
   .market-btn {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 14px;
+    padding: 10px 6px;
     text-align: center;
     cursor: pointer;
     transition: all 0.2s;
@@ -208,17 +173,74 @@
 
   .market-name {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    letter-spacing: 2px;
+    font-size: 18px;
+    letter-spacing: 1px;
     color: var(--text);
   }
 
   .market-btn.active .market-name { color: var(--green); }
 
   .market-desc {
-    font-size: 11px;
+    font-size: 9px;
     color: var(--muted);
     margin-top: 2px;
+  }
+
+  /* UPLOAD BUTTONS */
+  .upload-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .upload-btn {
+    background: var(--card);
+    border: 2px dashed var(--border);
+    border-radius: 14px;
+    padding: 20px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .upload-btn:active { transform: scale(0.97); }
+
+  .upload-icon { font-size: 32px; display: block; margin-bottom: 8px; }
+
+  .upload-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .upload-sub { font-size: 11px; color: var(--muted); }
+
+  /* IMAGE PREVIEW */
+  .image-preview {
+    display: none;
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    border: 2px solid var(--green);
+    position: relative;
+  }
+
+  .image-preview img { width: 100%; display: block; }
+
+  .clear-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(0,0,0,0.8);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    color: var(--text);
+    font-size: 12px;
+    cursor: pointer;
   }
 
   /* ANALYZE BUTTON */
@@ -233,27 +255,18 @@
     font-size: 24px;
     letter-spacing: 3px;
     cursor: pointer;
-    margin-bottom: 24px;
-    transition: all 0.2s;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
   }
 
-  .analyze-btn:active { transform: scale(0.98); }
-  .analyze-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
+  .analyze-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .analyze-btn:active:not(:disabled) { transform: scale(0.98); }
 
   /* LOADING */
-  .loading {
-    display: none;
-    text-align: center;
-    padding: 32px;
-  }
-
+  .loading { display: none; text-align: center; padding: 32px; }
   .loading.active { display: block; }
 
   .pulse-ring {
@@ -277,30 +290,44 @@
     letter-spacing: 1px;
   }
 
+  /* ERROR */
+  .error-box {
+    background: rgba(255,51,85,0.08);
+    border: 1px solid var(--red);
+    border-radius: 10px;
+    padding: 16px;
+    color: var(--red);
+    font-size: 13px;
+    margin-bottom: 16px;
+    display: none;
+  }
+
+  .error-box.active { display: block; }
+
   /* SIGNAL CARD */
   .signal-card {
     display: none;
     border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 24px;
+    padding: 20px;
+    margin-bottom: 20px;
     border: 1px solid;
   }
 
   .signal-card.active { display: block; }
-  .signal-card.buy { background: rgba(0,255,136,0.06); border-color: var(--green); }
-  .signal-card.sell { background: rgba(255,51,85,0.06); border-color: var(--red); }
-  .signal-card.wait { background: rgba(255,214,0,0.06); border-color: var(--yellow); }
+  .signal-card.buy { background: rgba(0,255,136,0.05); border-color: var(--green); }
+  .signal-card.sell { background: rgba(255,51,85,0.05); border-color: var(--red); }
+  .signal-card.wait { background: rgba(255,214,0,0.05); border-color: var(--yellow); }
 
   .signal-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
   .signal-badge {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 48px;
+    font-size: 52px;
     letter-spacing: 3px;
     line-height: 1;
   }
@@ -321,17 +348,71 @@
   .sell .confidence-badge { background: rgba(255,51,85,0.15); color: var(--red); }
   .wait .confidence-badge { background: rgba(255,214,0,0.15); color: var(--yellow); }
 
-  .signal-levels {
+  /* SENTIMENT BAR */
+  .sentiment-wrap { margin-bottom: 16px; }
+
+  .sentiment-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+
+  .sentiment-buy-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .sentiment-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .sentiment-sell-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--red);
+    font-weight: 600;
+  }
+
+  .sentiment-track {
+    background: var(--border);
+    border-radius: 20px;
+    height: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .sentiment-fill {
+    height: 100%;
+    border-radius: 20px;
+    transition: width 0.8s ease;
+    background: linear-gradient(90deg, var(--green), var(--red));
+  }
+
+  .sentiment-desc {
+    text-align: center;
+    margin-top: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* LEVELS GRID */
+  .levels-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 16px;
+    gap: 8px;
+    margin-bottom: 10px;
   }
 
   .level-box {
     background: rgba(255,255,255,0.04);
     border-radius: 10px;
-    padding: 12px 10px;
+    padding: 12px 8px;
     text-align: center;
   }
 
@@ -345,16 +426,39 @@
 
   .level-value {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     color: var(--text);
   }
 
+  .stop-box {
+    border: 1px solid var(--red);
+    background: rgba(255,51,85,0.08);
+  }
+
+  .stop-box .level-label { color: var(--red); }
+  .stop-box .level-value { color: var(--red); }
+
+  /* RR GRID */
+  .rr-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .rr-box {
+    background: rgba(255,255,255,0.04);
+    border-radius: 10px;
+    padding: 10px 8px;
+    text-align: center;
+  }
+
   .signal-summary {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text);
     line-height: 1.5;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     padding: 12px;
     background: rgba(255,255,255,0.04);
     border-radius: 10px;
@@ -363,21 +467,18 @@
   .signal-reasons { list-style: none; }
 
   .signal-reasons li {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--muted);
-    padding: 6px 0;
+    padding: 6px 0 6px 16px;
     border-bottom: 1px solid var(--border);
-    padding-left: 16px;
     position: relative;
   }
 
   .signal-reasons li:last-child { border-bottom: none; }
-
   .buy .signal-reasons li::before { content: '▲'; color: var(--green); position: absolute; left: 0; font-size: 8px; top: 9px; }
   .sell .signal-reasons li::before { content: '▼'; color: var(--red); position: absolute; left: 0; font-size: 8px; top: 9px; }
   .wait .signal-reasons li::before { content: '●'; color: var(--yellow); position: absolute; left: 0; font-size: 8px; top: 9px; }
 
-  /* TIMESTAMP */
   .timestamp {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
@@ -387,20 +488,20 @@
   }
 
   /* HISTORY */
-  .history-section { margin-bottom: 32px; }
+  .history-section { margin-bottom: 24px; }
 
   .section-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     letter-spacing: 2px;
     color: var(--muted);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 
   .history-item {
     background: var(--card);
     border-radius: 10px;
-    padding: 12px 16px;
+    padding: 12px 14px;
     margin-bottom: 8px;
     display: flex;
     align-items: center;
@@ -419,125 +520,114 @@
 
   .history-meta {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
+    font-size: 10px;
     color: var(--muted);
     text-align: right;
   }
 
-  /* SETTINGS BUTTON */
-  .settings-btn {
-    position: absolute;
-    top: 54px;
-    left: 16px;
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 4px 8px;
-    color: var(--muted);
-    font-size: 14px;
-    cursor: pointer;
-  }
-
-  /* ERROR */
-  .error-box {
-    background: rgba(255,51,85,0.08);
-    border: 1px solid var(--red);
-    border-radius: 10px;
-    padding: 16px;
-    color: var(--red);
-    font-size: 13px;
-    margin-bottom: 20px;
-    display: none;
-  }
-
-  .error-box.active { display: block; }
-
-  /* DISCLAIMER */
   .disclaimer {
     font-size: 10px;
     color: var(--muted);
     text-align: center;
-    padding: 0 20px 40px;
+    padding: 0 20px 20px;
     line-height: 1.6;
+    display: none;
   }
 
-  /* RETAKE BUTTON */
-  .retake-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(0,0,0,0.7);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 6px 12px;
-    color: var(--text);
-    font-size: 12px;
-    cursor: pointer;
-  }
+  #fileInput, #galleryInput { display: none; }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
-  <button class="settings-btn" onclick="showSettings()" id="settingsBtn" style="display:none">⚙️</button>
+  <button class="settings-btn" onclick="showSettings()" id="settingsBtn">⚙️</button>
   <div class="header-logo">APEX TRADE</div>
   <div class="header-sub">AI SIGNAL SYSTEM</div>
   <div class="key-indicator key-missing" id="keyIndicator">NO KEY</div>
 </div>
 
-<!-- SETUP SCREEN -->
+<!-- SETUP -->
 <div class="setup-screen active" id="setupScreen">
-  <div class="setup-title">Setup Your API Key</div>
-  <div class="setup-desc">Enter your Anthropic API key to power APEX TRADE AI on your iPhone. Your key is stored only on this device — never shared.</div>
+  <div class="setup-title">Setup API Key</div>
+  <div class="setup-desc">Enter your Anthropic API key. Stored only on this device — never shared.</div>
 
   <label class="input-label">ANTHROPIC API KEY</label>
   <input type="password" class="api-input" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off" autocorrect="off" spellcheck="false">
 
-  <label class="input-label">SELECT YOUR MARKET</label>
-  <div class="market-selector" style="margin-bottom:24px">
+  <label class="input-label">DEFAULT MARKET</label>
+  <div class="market-grid" style="margin-bottom:24px">
     <div class="market-btn active" id="setupYM" onclick="selectSetupMarket('YM')">
       <div class="market-name">YM</div>
-      <div class="market-desc">Dow Jones</div>
+      <div class="market-desc">Dow</div>
     </div>
     <div class="market-btn" id="setupNQ" onclick="selectSetupMarket('NQ')">
       <div class="market-name">NQ</div>
       <div class="market-desc">Nasdaq</div>
     </div>
+    <div class="market-btn" id="setupES" onclick="selectSetupMarket('ES')">
+      <div class="market-name">ES</div>
+      <div class="market-desc">S&P 500</div>
+    </div>
+    <div class="market-btn" id="setupRTY" onclick="selectSetupMarket('RTY')">
+      <div class="market-name">RTY</div>
+      <div class="market-desc">Russell</div>
+    </div>
   </div>
 
   <button class="btn-primary" onclick="saveApiKey()">ACTIVATE APEX TRADE</button>
-
-  <div class="error-box active" id="setupError" style="display:none"></div>
+  <div class="error-box" id="setupError"></div>
 </div>
 
 <!-- MAIN APP -->
 <div class="main-app" id="mainApp">
 
-  <!-- CAMERA ZONE -->
-  <div class="camera-zone" id="cameraZone" onclick="triggerCamera()">
-    <span class="camera-icon">📸</span>
-    <div class="camera-text">TAP TO PHOTOGRAPH CHART</div>
-    <div class="camera-sub">Point at your TradingView screen</div>
-    <input type="file" id="fileInput" accept="image/*" capture="environment" onchange="handleImage(event)">
-  </div>
-
   <!-- MARKET SELECTOR -->
-  <div class="market-selector">
+  <div class="market-grid">
     <div class="market-btn active" id="btnYM" onclick="selectMarket('YM')">
       <div class="market-name">YM</div>
-      <div class="market-desc">Dow Jones</div>
+      <div class="market-desc">Dow</div>
     </div>
     <div class="market-btn" id="btnNQ" onclick="selectMarket('NQ')">
       <div class="market-name">NQ</div>
       <div class="market-desc">Nasdaq</div>
     </div>
+    <div class="market-btn" id="btnES" onclick="selectMarket('ES')">
+      <div class="market-name">ES</div>
+      <div class="market-desc">S&P 500</div>
+    </div>
+    <div class="market-btn" id="btnRTY" onclick="selectMarket('RTY')">
+      <div class="market-name">RTY</div>
+      <div class="market-desc">Russell</div>
+    </div>
+  </div>
+
+  <!-- UPLOAD BUTTONS -->
+  <div class="upload-grid">
+    <div class="upload-btn" onclick="document.getElementById('fileInput').click()">
+      <span class="upload-icon">📸</span>
+      <div class="upload-label">CAMERA</div>
+      <div class="upload-sub">Take photo</div>
+    </div>
+    <div class="upload-btn" onclick="document.getElementById('galleryInput').click()">
+      <span class="upload-icon">🖼️</span>
+      <div class="upload-label">SCREENSHOT</div>
+      <div class="upload-sub">From gallery</div>
+    </div>
+  </div>
+
+  <input type="file" id="fileInput" accept="image/*" capture="environment" onchange="handleImage(event)">
+  <input type="file" id="galleryInput" accept="image/*" onchange="handleImage(event)">
+
+  <!-- IMAGE PREVIEW -->
+  <div class="image-preview" id="imagePreview">
+    <img id="previewImg" src="" alt="Chart">
+    <button class="clear-btn" onclick="clearImage()">✕ Clear</button>
   </div>
 
   <!-- ERROR -->
   <div class="error-box" id="errorBox"></div>
 
-  <!-- ANALYZE BUTTON -->
+  <!-- ANALYZE -->
   <button class="analyze-btn" id="analyzeBtn" onclick="analyzeChart()" disabled>
     ⚡ ANALYZE CHART
   </button>
@@ -550,11 +640,28 @@
 
   <!-- SIGNAL CARD -->
   <div class="signal-card" id="signalCard">
+
+    <!-- SIGNAL HEADER -->
     <div class="signal-header">
       <div class="signal-badge" id="signalBadge">—</div>
       <div class="confidence-badge" id="confidenceBadge">—</div>
     </div>
-    <div class="signal-levels">
+
+    <!-- SENTIMENT BAR -->
+    <div class="sentiment-wrap">
+      <div class="sentiment-labels">
+        <span class="sentiment-buy-label" id="buyPct">BUYERS 0%</span>
+        <span class="sentiment-title">SENTIMENT</span>
+        <span class="sentiment-sell-label" id="sellPct">SELLERS 0%</span>
+      </div>
+      <div class="sentiment-track">
+        <div class="sentiment-fill" id="sentimentFill" style="width:50%"></div>
+      </div>
+      <div class="sentiment-desc" id="sentimentDesc">—</div>
+    </div>
+
+    <!-- ENTRY / TARGET / TIGHT STOP -->
+    <div class="levels-grid">
       <div class="level-box">
         <div class="level-label">ENTRY</div>
         <div class="level-value" id="entryVal">—</div>
@@ -563,13 +670,34 @@
         <div class="level-label">TARGET</div>
         <div class="level-value" id="targetVal">—</div>
       </div>
-      <div class="level-box">
-        <div class="level-label">STOP</div>
+      <div class="level-box stop-box">
+        <div class="level-label">TIGHT STOP</div>
         <div class="level-value" id="stopVal">—</div>
       </div>
     </div>
+
+    <!-- RISK / REWARD / RATIO -->
+    <div class="rr-grid">
+      <div class="rr-box">
+        <div class="level-label">RISK $</div>
+        <div class="level-value" id="riskVal" style="color:var(--red)">—</div>
+      </div>
+      <div class="rr-box">
+        <div class="level-label">REWARD $</div>
+        <div class="level-value" id="rewardVal" style="color:var(--green)">—</div>
+      </div>
+      <div class="rr-box">
+        <div class="level-label">R:R RATIO</div>
+        <div class="level-value" id="rrVal" style="color:var(--blue)">—</div>
+      </div>
+    </div>
+
+    <!-- SUMMARY -->
     <div class="signal-summary" id="signalSummary"></div>
+
+    <!-- REASONS -->
     <ul class="signal-reasons" id="signalReasons"></ul>
+
     <div class="timestamp" id="signalTime"></div>
   </div>
 
@@ -581,9 +709,8 @@
 
 </div>
 
-<!-- DISCLAIMER -->
-<div class="disclaimer" id="disclaimer" style="display:none">
-  ⚠️ Not financial advice. All signals are AI-generated analysis only. Always use stop losses. Trade at your own risk.
+<div class="disclaimer" id="disclaimer">
+  ⚠️ Not financial advice. AI analysis only. Always use stop losses. Trade at your own risk. Max 2 trades per day.
 </div>
 
 <script>
@@ -591,14 +718,13 @@
   let currentImage = null;
   let signalHistory = JSON.parse(localStorage.getItem('apex_history') || '[]');
 
-  // Init
+  // Tick values per market
+  const tickValue = { YM: 5, NQ: 5, ES: 12.5, RTY: 5 };
+  const maxStop = { YM: 40, NQ: 40, ES: 8, RTY: 20 }; // Max tight stop in ticks
+
   window.onload = function() {
     const key = localStorage.getItem('apex_api_key');
-    if (key) {
-      showMainApp();
-    } else {
-      document.getElementById('setupScreen').classList.add('active');
-    }
+    if (key) showMainApp();
     renderHistory();
   };
 
@@ -622,48 +748,39 @@
 
   function selectSetupMarket(m) {
     selectedMarket = m;
-    document.getElementById('setupYM').classList.toggle('active', m === 'YM');
-    document.getElementById('setupNQ').classList.toggle('active', m === 'NQ');
+    ['YM','NQ','ES','RTY'].forEach(x => {
+      document.getElementById('setup'+x).classList.toggle('active', x === m);
+    });
   }
 
   function selectMarket(m) {
     selectedMarket = m;
-    document.getElementById('btnYM').classList.toggle('active', m === 'YM');
-    document.getElementById('btnNQ').classList.toggle('active', m === 'NQ');
+    ['YM','NQ','ES','RTY'].forEach(x => {
+      document.getElementById('btn'+x).classList.toggle('active', x === m);
+    });
   }
 
   function saveApiKey() {
     const key = document.getElementById('apiKeyInput').value.trim();
     const errEl = document.getElementById('setupError');
-
     if (!key.startsWith('sk-ant-')) {
       errEl.textContent = 'Invalid key. Must start with sk-ant-';
-      errEl.style.display = 'block';
+      errEl.classList.add('active');
       return;
     }
-
     localStorage.setItem('apex_api_key', key);
-    errEl.style.display = 'none';
+    errEl.classList.remove('active');
     showMainApp();
-  }
-
-  function triggerCamera() {
-    document.getElementById('fileInput').click();
   }
 
   function handleImage(event) {
     const file = event.target.files[0];
     if (!file) return;
-
     const reader = new FileReader();
     reader.onload = function(e) {
       currentImage = e.target.result;
-      const zone = document.getElementById('cameraZone');
-      zone.classList.add('has-image');
-      zone.innerHTML = `
-        <img src="${currentImage}" alt="Chart">
-        <button class="retake-btn" onclick="retakePhoto(event)">📸 Retake</button>
-      `;
+      document.getElementById('previewImg').src = currentImage;
+      document.getElementById('imagePreview').style.display = 'block';
       document.getElementById('analyzeBtn').disabled = false;
       document.getElementById('signalCard').classList.remove('active');
       document.getElementById('errorBox').classList.remove('active');
@@ -671,27 +788,27 @@
     reader.readAsDataURL(file);
   }
 
-  function retakePhoto(e) {
-    e.stopPropagation();
-    const zone = document.getElementById('cameraZone');
-    zone.classList.remove('has-image');
-    zone.innerHTML = `
-      <span class="camera-icon">📸</span>
-      <div class="camera-text">TAP TO PHOTOGRAPH CHART</div>
-      <div class="camera-sub">Point at your TradingView screen</div>
-      <input type="file" id="fileInput" accept="image/*" capture="environment" onchange="handleImage(event)">
-    `;
+  function clearImage() {
     currentImage = null;
+    document.getElementById('imagePreview').style.display = 'none';
     document.getElementById('analyzeBtn').disabled = true;
+    document.getElementById('fileInput').value = '';
+    document.getElementById('galleryInput').value = '';
+  }
+
+  function getMarketName(m) {
+    const names = { YM: 'YM Dow Jones futures', NQ: 'NQ Nasdaq futures', ES: 'ES S&P 500 futures', RTY: 'RTY Russell 2000 futures' };
+    return names[m] || m;
   }
 
   async function analyzeChart() {
     if (!currentImage) return;
-
     const apiKey = localStorage.getItem('apex_api_key');
     if (!apiKey) { showSettings(); return; }
 
-    const marketName = selectedMarket === 'YM' ? 'YM Dow Jones futures' : 'NQ Nasdaq futures';
+    const mktName = getMarketName(selectedMarket);
+    const maxStopTicks = maxStop[selectedMarket];
+    const tv = tickValue[selectedMarket];
 
     document.getElementById('loading').classList.add('active');
     document.getElementById('analyzeBtn').disabled = true;
@@ -701,32 +818,43 @@
     const base64 = currentImage.split(',')[1];
     const mediaType = currentImage.split(';')[0].split(':')[1];
 
-    const prompt = `You are an elite futures trading assistant for ${marketName}.
+    const prompt = `You are an elite futures trading assistant for ${mktName}.
 
-Analyze this TradingView chart screenshot using these rules:
+Analyze this TradingView chart screenshot carefully.
 
 WHAT TO LOOK FOR:
-- Candle/bar color and direction
-- Break of Structure (BOS) — price breaks above recent high or below recent low
-- Change of Character (CHoCH) — momentum shifting direction
-- Order blocks — supply/demand zones
-- EMA direction — sloping up or down
+- BOS (Break of Structure) — bullish or bearish
+- CHoCH (Change of Character) — momentum shift
+- Order blocks — red resistance, green support
+- EMA direction — up or down
 - Volume confirmation
 - Premium vs discount zones
+- Overall chart sentiment — who is in control buyers or sellers
+
+TIGHT STOP RULES:
+- Maximum stop loss is ${maxStopTicks} ticks from entry
+- Place stop just beyond nearest order block or structure
+- NEVER suggest a stop larger than ${maxStopTicks} ticks
+- Target must be at least 2x the stop distance
 
 SIGNAL RULES:
-- BUY only if: BOS bullish + price in discount + EMAs bullish + volume confirming
-- SELL only if: BOS bearish + price in premium + EMAs bearish + volume confirming
-- WAIT if: mixed signals, choppy price, or dead zone 12PM-2PM EST
+- BUY only if: BOS bullish + discount zone + EMAs up + volume confirming
+- SELL only if: BOS bearish + premium zone + EMAs down + volume confirming  
+- WAIT if: mixed signals, choppy, or no clear setup
 
-Respond ONLY in this exact JSON format:
+Respond ONLY in this exact JSON format — no other text:
 {
   "signal": "BUY" or "SELL" or "WAIT",
   "confidence": "HIGH" or "MEDIUM" or "LOW",
-  "entry": "price level",
-  "target": "price level",
-  "stop": "price level",
-  "summary": "One clear sentence explaining why",
+  "entry": "price as number only",
+  "target": "price as number only",
+  "stop": "price as number only",
+  "stop_ticks": "number of ticks for stop",
+  "target_ticks": "number of ticks for target",
+  "buyers_pct": "estimated % of buyers in market 0-100",
+  "sellers_pct": "estimated % of sellers in market 0-100",
+  "sentiment": "STRONGLY BULLISH or BULLISH or NEUTRAL or BEARISH or STRONGLY BEARISH",
+  "summary": "One clear sentence explaining signal",
   "reasons": ["reason 1", "reason 2", "reason 3"]
 }`;
 
@@ -741,7 +869,7 @@ Respond ONLY in this exact JSON format:
         },
         body: JSON.stringify({
           model: 'claude-sonnet-4-20250514',
-          max_tokens: 600,
+          max_tokens: 700,
           messages: [{
             role: 'user',
             content: [
@@ -753,19 +881,18 @@ Respond ONLY in this exact JSON format:
       });
 
       const data = await response.json();
-
       if (data.error) throw new Error(data.error.message);
 
       const text = data.content[0].text;
       const clean = text.replace(/```json|```/g, '').trim();
       const result = JSON.parse(clean);
 
-      displaySignal(result);
+      displaySignal(result, tv);
       saveHistory(result);
 
     } catch (err) {
       const errBox = document.getElementById('errorBox');
-      errBox.textContent = '❌ Analysis failed: ' + err.message;
+      errBox.textContent = '❌ ' + err.message;
       errBox.classList.add('active');
     } finally {
       document.getElementById('loading').classList.remove('active');
@@ -773,27 +900,51 @@ Respond ONLY in this exact JSON format:
     }
   }
 
-  function displaySignal(result) {
+  function displaySignal(result, tv) {
     const card = document.getElementById('signalCard');
     const signal = result.signal;
-
     card.className = 'signal-card active ' + signal.toLowerCase();
-    document.getElementById('signalBadge').textContent = signal === 'BUY' ? '🟢 BUY' : signal === 'SELL' ? '🔴 SELL' : '⚠️ WAIT';
+
+    // Signal + confidence
+    const icons = { BUY: '🟢 BUY', SELL: '🔴 SELL', WAIT: '⚠️ WAIT' };
+    document.getElementById('signalBadge').textContent = icons[signal];
     document.getElementById('confidenceBadge').textContent = result.confidence;
+
+    // Sentiment bar
+    const buyPct = parseInt(result.buyers_pct) || 50;
+    const sellPct = parseInt(result.sellers_pct) || 50;
+    document.getElementById('buyPct').textContent = `BUYERS ${buyPct}%`;
+    document.getElementById('sellPct').textContent = `SELLERS ${sellPct}%`;
+    document.getElementById('sentimentFill').style.width = buyPct + '%';
+    document.getElementById('sentimentDesc').textContent = result.sentiment || '—';
+
+    // Levels
     document.getElementById('entryVal').textContent = result.entry || '—';
     document.getElementById('targetVal').textContent = result.target || '—';
     document.getElementById('stopVal').textContent = result.stop || '—';
-    document.getElementById('signalSummary').textContent = result.summary || '';
-    document.getElementById('signalTime').textContent = new Date().toLocaleTimeString();
 
-    const reasonsList = document.getElementById('signalReasons');
-    reasonsList.innerHTML = '';
+    // Risk/Reward in dollars
+    const stopTicks = parseInt(result.stop_ticks) || 0;
+    const targetTicks = parseInt(result.target_ticks) || 0;
+    const riskDollars = stopTicks * tv;
+    const rewardDollars = targetTicks * tv;
+    const ratio = stopTicks > 0 ? (targetTicks / stopTicks).toFixed(1) : '—';
+
+    document.getElementById('riskVal').textContent = riskDollars > 0 ? `$${riskDollars}` : '—';
+    document.getElementById('rewardVal').textContent = rewardDollars > 0 ? `$${rewardDollars}` : '—';
+    document.getElementById('rrVal').textContent = ratio !== '—' ? `1:${ratio}` : '—';
+
+    // Summary + reasons
+    document.getElementById('signalSummary').textContent = result.summary || '';
+    const list = document.getElementById('signalReasons');
+    list.innerHTML = '';
     (result.reasons || []).forEach(r => {
       const li = document.createElement('li');
       li.textContent = r;
-      reasonsList.appendChild(li);
+      list.appendChild(li);
     });
 
+    document.getElementById('signalTime').textContent = new Date().toLocaleTimeString();
     card.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
@@ -802,8 +953,10 @@ Respond ONLY in this exact JSON format:
       signal: result.signal,
       confidence: result.confidence,
       market: selectedMarket,
-      time: new Date().toLocaleTimeString(),
-      summary: result.summary
+      sentiment: result.sentiment,
+      buyers: result.buyers_pct,
+      sellers: result.sellers_pct,
+      time: new Date().toLocaleTimeString()
     };
     signalHistory.unshift(entry);
     if (signalHistory.length > 10) signalHistory.pop();
@@ -819,9 +972,13 @@ Respond ONLY in this exact JSON format:
       <div class="history-item">
         <div>
           <div class="history-signal history-${h.signal.toLowerCase()}">${h.signal}</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:2px">${h.market} · ${h.confidence}</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px">${h.market} · ${h.confidence} · ${h.sentiment || ''}</div>
         </div>
-        <div class="history-meta">${h.time}</div>
+        <div class="history-meta">
+          <div style="color:var(--green)">${h.buyers || 0}% buy</div>
+          <div style="color:var(--red)">${h.sellers || 0}% sell</div>
+          <div style="margin-top:2px">${h.time}</div>
+        </div>
       </div>
     `).join('');
   }
