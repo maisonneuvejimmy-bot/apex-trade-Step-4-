@@ -14,8 +14,11 @@
     --red: #ff3355;
     --yellow: #ffd600;
     --blue: #00ccff;
+    --orange: #ff8c00;
+    --purple: #cc44ff;
     --bg: #060a0f;
     --card: #0d1420;
+    --card2: #111827;
     --border: #1a2535;
     --text: #e0e8f0;
     --muted: #4a6080;
@@ -28,10 +31,10 @@
     color: var(--text);
     font-family: 'IBM Plex Sans', sans-serif;
     min-height: 100vh;
-    overflow-x: hidden;
-    padding-bottom: 40px;
+    padding-bottom: 60px;
   }
 
+  /* HEADER */
   .header {
     background: linear-gradient(180deg, #0a1628 0%, var(--bg) 100%);
     padding: 54px 20px 16px;
@@ -42,12 +45,11 @@
 
   .header-logo {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 36px;
-    letter-spacing: 4px;
+    font-size: 38px;
+    letter-spacing: 5px;
     background: linear-gradient(135deg, var(--green), #00ccff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    line-height: 1;
   }
 
   .header-sub {
@@ -55,7 +57,7 @@
     font-size: 10px;
     color: var(--muted);
     letter-spacing: 3px;
-    margin-top: 4px;
+    margin-top: 2px;
   }
 
   .key-indicator {
@@ -98,12 +100,7 @@
     margin-bottom: 8px;
   }
 
-  .setup-desc {
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.6;
-    margin-bottom: 32px;
-  }
+  .setup-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
 
   .input-label {
     font-family: 'IBM Plex Mono', monospace;
@@ -124,8 +121,8 @@
     font-family: 'IBM Plex Mono', monospace;
     font-size: 13px;
     outline: none;
-    -webkit-appearance: none;
     margin-bottom: 16px;
+    -webkit-appearance: none;
   }
 
   .api-input:focus { border-color: var(--green); }
@@ -141,14 +138,13 @@
     font-size: 20px;
     letter-spacing: 2px;
     cursor: pointer;
-    margin-bottom: 12px;
   }
 
   /* MAIN */
   .main-app { display: none; padding: 16px; }
   .main-app.active { display: block; }
 
-  /* MARKET GRID - 4 markets */
+  /* MARKET GRID */
   .market-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -160,65 +156,32 @@
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 10px 6px;
+    padding: 10px 4px;
     text-align: center;
     cursor: pointer;
-    transition: all 0.2s;
   }
 
-  .market-btn.active {
-    border-color: var(--green);
-    background: rgba(0,255,136,0.08);
-  }
-
-  .market-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    letter-spacing: 1px;
-    color: var(--text);
-  }
-
+  .market-btn.active { border-color: var(--green); background: rgba(0,255,136,0.08); }
+  .market-name { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--text); }
   .market-btn.active .market-name { color: var(--green); }
+  .market-desc { font-size: 9px; color: var(--muted); }
 
-  .market-desc {
-    font-size: 9px;
-    color: var(--muted);
-    margin-top: 2px;
-  }
-
-  /* UPLOAD BUTTONS */
-  .upload-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 16px;
-  }
+  /* UPLOAD */
+  .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
 
   .upload-btn {
     background: var(--card);
     border: 2px dashed var(--border);
     border-radius: 14px;
-    padding: 20px 10px;
+    padding: 18px 10px;
     text-align: center;
     cursor: pointer;
-    transition: all 0.2s;
   }
 
-  .upload-btn:active { transform: scale(0.97); }
+  .upload-icon { font-size: 28px; display: block; margin-bottom: 6px; }
+  .upload-label { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 1px; color: var(--text); }
+  .upload-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
 
-  .upload-icon { font-size: 32px; display: block; margin-bottom: 8px; }
-
-  .upload-label {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 16px;
-    letter-spacing: 1px;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-
-  .upload-sub { font-size: 11px; color: var(--muted); }
-
-  /* IMAGE PREVIEW */
   .image-preview {
     display: none;
     border-radius: 14px;
@@ -243,7 +206,7 @@
     cursor: pointer;
   }
 
-  /* ANALYZE BUTTON */
+  /* ANALYZE */
   .analyze-btn {
     width: 100%;
     background: linear-gradient(135deg, #003322, #006644);
@@ -256,22 +219,16 @@
     letter-spacing: 3px;
     cursor: pointer;
     margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
   }
 
   .analyze-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-  .analyze-btn:active:not(:disabled) { transform: scale(0.98); }
 
   /* LOADING */
   .loading { display: none; text-align: center; padding: 32px; }
   .loading.active { display: block; }
 
   .pulse-ring {
-    width: 60px;
-    height: 60px;
+    width: 60px; height: 60px;
     border: 3px solid var(--green);
     border-radius: 50%;
     margin: 0 auto 16px;
@@ -283,12 +240,7 @@
     50% { transform: scale(1.15); opacity: 0.5; }
   }
 
-  .loading-text {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--green);
-    letter-spacing: 1px;
-  }
+  .loading-text { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--green); }
 
   /* ERROR */
   .error-box {
@@ -301,33 +253,49 @@
     margin-bottom: 16px;
     display: none;
   }
-
   .error-box.active { display: block; }
 
   /* SIGNAL CARD */
-  .signal-card {
-    display: none;
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 1px solid;
+  .signal-card { display: none; margin-bottom: 20px; }
+  .signal-card.active { display: block; }
+
+  /* SECTION BLOCKS */
+  .sig-block {
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+    background: var(--card);
   }
 
-  .signal-card.active { display: block; }
-  .signal-card.buy { background: rgba(0,255,136,0.05); border-color: var(--green); }
-  .signal-card.sell { background: rgba(255,51,85,0.05); border-color: var(--red); }
-  .signal-card.wait { background: rgba(255,214,0,0.05); border-color: var(--yellow); }
-
-  .signal-header {
+  .sig-block-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
+    gap: 8px;
   }
+
+  /* MAIN SIGNAL */
+  .signal-main {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 12px;
+  }
+
+  .signal-main.buy { border: 1px solid var(--green); background: rgba(0,255,136,0.04); }
+  .signal-main.sell { border: 1px solid var(--red); background: rgba(255,51,85,0.04); }
+  .signal-main.wait { border: 1px solid var(--yellow); background: rgba(255,214,0,0.04); }
+
+  .signal-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
 
   .signal-badge {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 52px;
+    font-size: 56px;
     letter-spacing: 3px;
     line-height: 1;
   }
@@ -336,167 +304,141 @@
   .sell .signal-badge { color: var(--red); }
   .wait .signal-badge { color: var(--yellow); }
 
+  .signal-right { text-align: right; }
+
   .confidence-badge {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    padding: 6px 12px;
+    font-size: 12px;
+    padding: 6px 14px;
     border-radius: 20px;
-    letter-spacing: 1px;
+    margin-bottom: 6px;
+    display: inline-block;
   }
 
   .buy .confidence-badge { background: rgba(0,255,136,0.15); color: var(--green); }
   .sell .confidence-badge { background: rgba(255,51,85,0.15); color: var(--red); }
   .wait .confidence-badge { background: rgba(255,214,0,0.15); color: var(--yellow); }
 
-  /* SENTIMENT BAR */
-  .sentiment-wrap { margin-bottom: 16px; }
-
-  .sentiment-labels {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 6px;
-  }
-
-  .sentiment-buy-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--green);
-    font-weight: 600;
-  }
-
-  .sentiment-title {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 1px;
-  }
-
-  .sentiment-sell-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--red);
-    font-weight: 600;
-  }
-
-  .sentiment-track {
-    background: var(--border);
-    border-radius: 20px;
-    height: 12px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .sentiment-fill {
-    height: 100%;
-    border-radius: 20px;
-    transition: width 0.8s ease;
-    background: linear-gradient(90deg, var(--green), var(--red));
-  }
-
-  .sentiment-desc {
-    text-align: center;
-    margin-top: 6px;
+  .bias-text {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
     color: var(--muted);
   }
 
-  /* LEVELS GRID */
-  .levels-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 8px;
-    margin-bottom: 10px;
-  }
+  /* SENTIMENT */
+  .sentiment-wrap { margin-bottom: 0; }
+  .sentiment-labels { display: flex; justify-content: space-between; margin-bottom: 5px; }
+  .buy-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--green); font-weight: 600; }
+  .sell-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--red); font-weight: 600; }
+  .sent-title { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); }
+  .sentiment-track { background: var(--border); border-radius: 20px; height: 10px; overflow: hidden; }
+  .sentiment-fill { height: 100%; border-radius: 20px; background: linear-gradient(90deg, var(--green), var(--red)); transition: width 0.8s; }
+  .sentiment-desc { text-align: center; margin-top: 5px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); }
 
-  .level-box {
-    background: rgba(255,255,255,0.04);
-    border-radius: 10px;
-    padding: 12px 8px;
-    text-align: center;
-  }
+  /* ENTRY ZONE */
+  .entry-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .entry-box { background: var(--card2); border-radius: 10px; padding: 12px; }
+  .entry-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 1px; margin-bottom: 4px; }
+  .entry-value { font-family: 'IBM Plex Mono', monospace; font-size: 16px; font-weight: 600; color: var(--text); }
+  .entry-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
 
-  .level-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px;
-    color: var(--muted);
-    letter-spacing: 1px;
-    margin-bottom: 4px;
-  }
+  /* STOP */
+  .stop-box { background: rgba(255,51,85,0.08); border: 1px solid var(--red); border-radius: 10px; padding: 12px; }
+  .stop-box .entry-label { color: var(--red); }
+  .stop-box .entry-value { color: var(--red); }
 
-  .level-value {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text);
-  }
+  /* TARGETS */
+  .targets-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
 
-  .stop-box {
-    border: 1px solid var(--red);
-    background: rgba(255,51,85,0.08);
-  }
+  .target-box { border-radius: 10px; padding: 12px 8px; text-align: center; }
+  .t1 { background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.3); }
+  .t2 { background: rgba(0,204,255,0.08); border: 1px solid rgba(0,204,255,0.3); }
+  .t3 { background: rgba(255,140,0,0.08); border: 1px solid rgba(255,140,0,0.3); }
 
-  .stop-box .level-label { color: var(--red); }
-  .stop-box .level-value { color: var(--red); }
+  .target-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 1px; margin-bottom: 4px; }
+  .t1 .target-label { color: var(--green); }
+  .t2 .target-label { color: var(--blue); }
+  .t3 .target-label { color: var(--orange); }
 
-  /* RR GRID */
-  .rr-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 8px;
-    margin-bottom: 16px;
-  }
+  .target-price { font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600; }
+  .t1 .target-price { color: var(--green); }
+  .t2 .target-price { color: var(--blue); }
+  .t3 .target-price { color: var(--orange); }
 
-  .rr-box {
-    background: rgba(255,255,255,0.04);
-    border-radius: 10px;
-    padding: 10px 8px;
-    text-align: center;
-  }
+  .target-ticks { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .target-profit { font-size: 11px; font-weight: 600; margin-top: 2px; }
+  .t1 .target-profit { color: var(--green); }
+  .t2 .target-profit { color: var(--blue); }
+  .t3 .target-profit { color: var(--orange); }
 
-  .signal-summary {
-    font-size: 13px;
-    color: var(--text);
-    line-height: 1.5;
-    margin-bottom: 12px;
-    padding: 12px;
-    background: rgba(255,255,255,0.04);
-    border-radius: 10px;
-  }
+  /* RR */
+  .rr-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .rr-box { background: var(--card2); border-radius: 10px; padding: 10px; text-align: center; }
+  .rr-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--muted); margin-bottom: 4px; }
+  .rr-value { font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600; }
 
-  .signal-reasons { list-style: none; }
-
-  .signal-reasons li {
-    font-size: 12px;
-    color: var(--muted);
-    padding: 6px 0 6px 16px;
+  /* WHY THIS TRADE */
+  .reason-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
     border-bottom: 1px solid var(--border);
-    position: relative;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.4;
   }
 
-  .signal-reasons li:last-child { border-bottom: none; }
-  .buy .signal-reasons li::before { content: '▲'; color: var(--green); position: absolute; left: 0; font-size: 8px; top: 9px; }
-  .sell .signal-reasons li::before { content: '▼'; color: var(--red); position: absolute; left: 0; font-size: 8px; top: 9px; }
-  .wait .signal-reasons li::before { content: '●'; color: var(--yellow); position: absolute; left: 0; font-size: 8px; top: 9px; }
+  .reason-item:last-child { border-bottom: none; }
+  .reason-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
 
+  /* TRADE MANAGEMENT */
+  .mgmt-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .mgmt-item:last-child { border-bottom: none; }
+
+  .mgmt-bullet {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--blue);
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  /* WARNING BOX */
+  .warning-box {
+    background: rgba(255,51,85,0.08);
+    border: 1px solid rgba(255,51,85,0.3);
+    border-radius: 10px;
+    padding: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--red);
+    text-align: center;
+  }
+
+  /* TIMESTAMP */
   .timestamp {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
     color: var(--muted);
     text-align: center;
-    margin-top: 12px;
+    margin-top: 8px;
   }
 
   /* HISTORY */
   .history-section { margin-bottom: 24px; }
-
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 16px;
-    letter-spacing: 2px;
-    color: var(--muted);
-    margin-bottom: 10px;
-  }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 2px; color: var(--muted); margin-bottom: 10px; }
 
   .history-item {
     background: var(--card);
@@ -508,31 +450,13 @@
     justify-content: space-between;
   }
 
-  .history-signal {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
-    letter-spacing: 2px;
-  }
-
+  .history-signal { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px; }
   .history-buy { color: var(--green); }
   .history-sell { color: var(--red); }
   .history-wait { color: var(--yellow); }
+  .history-meta { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); text-align: right; }
 
-  .history-meta {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    text-align: right;
-  }
-
-  .disclaimer {
-    font-size: 10px;
-    color: var(--muted);
-    text-align: center;
-    padding: 0 20px 20px;
-    line-height: 1.6;
-    display: none;
-  }
+  .disclaimer { font-size: 10px; color: var(--muted); text-align: center; padding: 0 20px 20px; line-height: 1.6; display: none; }
 
   #fileInput, #galleryInput { display: none; }
 </style>
@@ -542,38 +466,23 @@
 <div class="header">
   <button class="settings-btn" onclick="showSettings()" id="settingsBtn">⚙️</button>
   <div class="header-logo">APEX TRADE</div>
-  <div class="header-sub">AI SIGNAL SYSTEM</div>
+  <div class="header-sub">PROFESSIONAL AI SIGNAL SYSTEM</div>
   <div class="key-indicator key-missing" id="keyIndicator">NO KEY</div>
 </div>
 
 <!-- SETUP -->
 <div class="setup-screen active" id="setupScreen">
   <div class="setup-title">Setup API Key</div>
-  <div class="setup-desc">Enter your Anthropic API key. Stored only on this device — never shared.</div>
-
+  <div class="setup-desc">Enter your Anthropic API key. Stored only on this device.</div>
   <label class="input-label">ANTHROPIC API KEY</label>
   <input type="password" class="api-input" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off" autocorrect="off" spellcheck="false">
-
   <label class="input-label">DEFAULT MARKET</label>
   <div class="market-grid" style="margin-bottom:24px">
-    <div class="market-btn active" id="setupYM" onclick="selectSetupMarket('YM')">
-      <div class="market-name">YM</div>
-      <div class="market-desc">Dow</div>
-    </div>
-    <div class="market-btn" id="setupNQ" onclick="selectSetupMarket('NQ')">
-      <div class="market-name">NQ</div>
-      <div class="market-desc">Nasdaq</div>
-    </div>
-    <div class="market-btn" id="setupES" onclick="selectSetupMarket('ES')">
-      <div class="market-name">ES</div>
-      <div class="market-desc">S&P 500</div>
-    </div>
-    <div class="market-btn" id="setupRTY" onclick="selectSetupMarket('RTY')">
-      <div class="market-name">RTY</div>
-      <div class="market-desc">Russell</div>
-    </div>
+    <div class="market-btn active" id="setupYM" onclick="selectSetupMarket('YM')"><div class="market-name">YM</div><div class="market-desc">Dow</div></div>
+    <div class="market-btn" id="setupNQ" onclick="selectSetupMarket('NQ')"><div class="market-name">NQ</div><div class="market-desc">Nasdaq</div></div>
+    <div class="market-btn" id="setupES" onclick="selectSetupMarket('ES')"><div class="market-name">ES</div><div class="market-desc">S&P 500</div></div>
+    <div class="market-btn" id="setupRTY" onclick="selectSetupMarket('RTY')"><div class="market-name">RTY</div><div class="market-desc">Russell</div></div>
   </div>
-
   <button class="btn-primary" onclick="saveApiKey()">ACTIVATE APEX TRADE</button>
   <div class="error-box" id="setupError"></div>
 </div>
@@ -581,27 +490,13 @@
 <!-- MAIN APP -->
 <div class="main-app" id="mainApp">
 
-  <!-- MARKET SELECTOR -->
   <div class="market-grid">
-    <div class="market-btn active" id="btnYM" onclick="selectMarket('YM')">
-      <div class="market-name">YM</div>
-      <div class="market-desc">Dow</div>
-    </div>
-    <div class="market-btn" id="btnNQ" onclick="selectMarket('NQ')">
-      <div class="market-name">NQ</div>
-      <div class="market-desc">Nasdaq</div>
-    </div>
-    <div class="market-btn" id="btnES" onclick="selectMarket('ES')">
-      <div class="market-name">ES</div>
-      <div class="market-desc">S&P 500</div>
-    </div>
-    <div class="market-btn" id="btnRTY" onclick="selectMarket('RTY')">
-      <div class="market-name">RTY</div>
-      <div class="market-desc">Russell</div>
-    </div>
+    <div class="market-btn active" id="btnYM" onclick="selectMarket('YM')"><div class="market-name">YM</div><div class="market-desc">Dow</div></div>
+    <div class="market-btn" id="btnNQ" onclick="selectMarket('NQ')"><div class="market-name">NQ</div><div class="market-desc">Nasdaq</div></div>
+    <div class="market-btn" id="btnES" onclick="selectMarket('ES')"><div class="market-name">ES</div><div class="market-desc">S&P 500</div></div>
+    <div class="market-btn" id="btnRTY" onclick="selectMarket('RTY')"><div class="market-name">RTY</div><div class="market-desc">Russell</div></div>
   </div>
 
-  <!-- UPLOAD BUTTONS -->
   <div class="upload-grid">
     <div class="upload-btn" onclick="document.getElementById('fileInput').click()">
       <span class="upload-icon">📸</span>
@@ -618,87 +513,158 @@
   <input type="file" id="fileInput" accept="image/*" capture="environment" onchange="handleImage(event)">
   <input type="file" id="galleryInput" accept="image/*" onchange="handleImage(event)">
 
-  <!-- IMAGE PREVIEW -->
   <div class="image-preview" id="imagePreview">
     <img id="previewImg" src="" alt="Chart">
     <button class="clear-btn" onclick="clearImage()">✕ Clear</button>
   </div>
 
-  <!-- ERROR -->
   <div class="error-box" id="errorBox"></div>
 
-  <!-- ANALYZE -->
   <button class="analyze-btn" id="analyzeBtn" onclick="analyzeChart()" disabled>
     ⚡ ANALYZE CHART
   </button>
 
-  <!-- LOADING -->
   <div class="loading" id="loading">
     <div class="pulse-ring"></div>
     <div class="loading-text">CLAUDE AI READING CHART...</div>
   </div>
 
-  <!-- SIGNAL CARD -->
+  <!-- FULL SIGNAL CARD -->
   <div class="signal-card" id="signalCard">
 
-    <!-- SIGNAL HEADER -->
-    <div class="signal-header">
-      <div class="signal-badge" id="signalBadge">—</div>
-      <div class="confidence-badge" id="confidenceBadge">—</div>
-    </div>
+    <!-- 1. MAIN SIGNAL -->
+    <div class="signal-main" id="signalMain">
+      <div class="signal-top">
+        <div class="signal-badge" id="signalBadge">—</div>
+        <div class="signal-right">
+          <div class="confidence-badge" id="confidenceBadge">—</div>
+          <div class="bias-text" id="biasText">—</div>
+        </div>
+      </div>
 
-    <!-- SENTIMENT BAR -->
-    <div class="sentiment-wrap">
-      <div class="sentiment-labels">
-        <span class="sentiment-buy-label" id="buyPct">BUYERS 0%</span>
-        <span class="sentiment-title">SENTIMENT</span>
-        <span class="sentiment-sell-label" id="sellPct">SELLERS 0%</span>
-      </div>
-      <div class="sentiment-track">
-        <div class="sentiment-fill" id="sentimentFill" style="width:50%"></div>
-      </div>
-      <div class="sentiment-desc" id="sentimentDesc">—</div>
-    </div>
-
-    <!-- ENTRY / TARGET / TIGHT STOP -->
-    <div class="levels-grid">
-      <div class="level-box">
-        <div class="level-label">ENTRY</div>
-        <div class="level-value" id="entryVal">—</div>
-      </div>
-      <div class="level-box">
-        <div class="level-label">TARGET</div>
-        <div class="level-value" id="targetVal">—</div>
-      </div>
-      <div class="level-box stop-box">
-        <div class="level-label">TIGHT STOP</div>
-        <div class="level-value" id="stopVal">—</div>
+      <!-- SENTIMENT -->
+      <div class="sentiment-wrap">
+        <div class="sentiment-labels">
+          <span class="buy-label" id="buyPct">BUYERS 0%</span>
+          <span class="sent-title">MARKET SENTIMENT</span>
+          <span class="sell-label" id="sellPct">SELLERS 0%</span>
+        </div>
+        <div class="sentiment-track">
+          <div class="sentiment-fill" id="sentimentFill" style="width:50%"></div>
+        </div>
+        <div class="sentiment-desc" id="sentimentDesc">—</div>
       </div>
     </div>
 
-    <!-- RISK / REWARD / RATIO -->
-    <div class="rr-grid">
-      <div class="rr-box">
-        <div class="level-label">RISK $</div>
-        <div class="level-value" id="riskVal" style="color:var(--red)">—</div>
+    <!-- 2. ENTRY ZONE -->
+    <div class="sig-block">
+      <div class="sig-block-title">🎯 ENTRY ZONE</div>
+      <div class="entry-grid" style="margin-bottom:10px">
+        <div class="entry-box">
+          <div class="entry-label">ENTRY PRICE</div>
+          <div class="entry-value" id="entryVal">—</div>
+          <div class="entry-sub">Market order</div>
+        </div>
+        <div class="entry-box">
+          <div class="entry-label">TRIGGER LEVEL</div>
+          <div class="entry-value" id="triggerVal">—</div>
+          <div class="entry-sub" id="triggerDesc">Wait for close above</div>
+        </div>
       </div>
-      <div class="rr-box">
-        <div class="level-label">REWARD $</div>
-        <div class="level-value" id="rewardVal" style="color:var(--green)">—</div>
-      </div>
-      <div class="rr-box">
-        <div class="level-label">R:R RATIO</div>
-        <div class="level-value" id="rrVal" style="color:var(--blue)">—</div>
+      <div class="stop-box">
+        <div class="entry-label">🛑 TIGHT STOP LOSS</div>
+        <div class="entry-value" id="stopVal">—</div>
+        <div class="entry-sub" id="stopDesc">—</div>
       </div>
     </div>
 
-    <!-- SUMMARY -->
-    <div class="signal-summary" id="signalSummary"></div>
+    <!-- 3. THREE TARGETS -->
+    <div class="sig-block">
+      <div class="sig-block-title">🎯 PROFIT TARGETS</div>
+      <div class="targets-grid">
+        <div class="target-box t1">
+          <div class="target-label">TARGET 1</div>
+          <div class="target-price" id="t1Price">—</div>
+          <div class="target-ticks" id="t1Ticks">— ticks</div>
+          <div class="target-profit" id="t1Profit">—</div>
+        </div>
+        <div class="target-box t2">
+          <div class="target-label">TARGET 2</div>
+          <div class="target-price" id="t2Price">—</div>
+          <div class="target-ticks" id="t2Ticks">— ticks</div>
+          <div class="target-profit" id="t2Profit">—</div>
+        </div>
+        <div class="target-box t3">
+          <div class="target-label">T3 RUNNER 🚀</div>
+          <div class="target-price" id="t3Price">—</div>
+          <div class="target-ticks" id="t3Ticks">— ticks</div>
+          <div class="target-profit" id="t3Profit">—</div>
+        </div>
+      </div>
+    </div>
 
-    <!-- REASONS -->
-    <ul class="signal-reasons" id="signalReasons"></ul>
+    <!-- 4. RISK/REWARD -->
+    <div class="sig-block">
+      <div class="sig-block-title">💰 RISK / REWARD</div>
+      <div class="rr-grid">
+        <div class="rr-box">
+          <div class="rr-label">RISK $</div>
+          <div class="rr-value" id="riskVal" style="color:var(--red)">—</div>
+        </div>
+        <div class="rr-box">
+          <div class="rr-label">MAX REWARD $</div>
+          <div class="rr-value" id="rewardVal" style="color:var(--green)">—</div>
+        </div>
+        <div class="rr-box">
+          <div class="rr-label">R:R RATIO</div>
+          <div class="rr-value" id="rrVal" style="color:var(--blue)">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. WHY THIS TRADE -->
+    <div class="sig-block">
+      <div class="sig-block-title">📊 WHY THIS TRADE</div>
+      <div id="whyList"></div>
+    </div>
+
+    <!-- 6. TRADE MANAGEMENT -->
+    <div class="sig-block">
+      <div class="sig-block-title">⚙️ TRADE MANAGEMENT</div>
+      <div id="mgmtList"></div>
+    </div>
+
+    <!-- 7. MARKET CONDITIONS -->
+    <div class="sig-block">
+      <div class="sig-block-title">📈 MARKET CONDITIONS</div>
+      <div class="entry-grid">
+        <div class="entry-box">
+          <div class="entry-label">TREND</div>
+          <div class="entry-value" id="trendVal" style="font-size:13px">—</div>
+        </div>
+        <div class="entry-box">
+          <div class="entry-label">VWAP</div>
+          <div class="entry-value" id="vwapVal" style="font-size:13px">—</div>
+        </div>
+        <div class="entry-box">
+          <div class="entry-label">EMA SIGNAL</div>
+          <div class="entry-value" id="emaVal" style="font-size:13px">—</div>
+        </div>
+        <div class="entry-box">
+          <div class="entry-label">VOLUME</div>
+          <div class="entry-value" id="volVal" style="font-size:13px">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. EXIT IF WRONG -->
+    <div class="sig-block">
+      <div class="sig-block-title">🚨 EXIT IF WRONG</div>
+      <div class="warning-box" id="exitCondition">—</div>
+    </div>
 
     <div class="timestamp" id="signalTime"></div>
+
   </div>
 
   <!-- HISTORY -->
@@ -710,17 +676,14 @@
 </div>
 
 <div class="disclaimer" id="disclaimer">
-  ⚠️ Not financial advice. AI analysis only. Always use stop losses. Trade at your own risk. Max 2 trades per day.
+  ⚠️ Not financial advice. AI analysis only. Always use stop losses. Max 2 trades/day. Trade at your own risk.
 </div>
 
 <script>
   let selectedMarket = 'YM';
   let currentImage = null;
   let signalHistory = JSON.parse(localStorage.getItem('apex_history') || '[]');
-
-  // Tick values per market
   const tickValue = { YM: 5, NQ: 5, ES: 12.5, RTY: 5 };
-  const maxStop = { YM: 40, NQ: 40, ES: 8, RTY: 20 }; // Max tight stop in ticks
 
   window.onload = function() {
     const key = localStorage.getItem('apex_api_key');
@@ -748,16 +711,12 @@
 
   function selectSetupMarket(m) {
     selectedMarket = m;
-    ['YM','NQ','ES','RTY'].forEach(x => {
-      document.getElementById('setup'+x).classList.toggle('active', x === m);
-    });
+    ['YM','NQ','ES','RTY'].forEach(x => document.getElementById('setup'+x).classList.toggle('active', x === m));
   }
 
   function selectMarket(m) {
     selectedMarket = m;
-    ['YM','NQ','ES','RTY'].forEach(x => {
-      document.getElementById('btn'+x).classList.toggle('active', x === m);
-    });
+    ['YM','NQ','ES','RTY'].forEach(x => document.getElementById('btn'+x).classList.toggle('active', x === m));
   }
 
   function saveApiKey() {
@@ -797,8 +756,7 @@
   }
 
   function getMarketName(m) {
-    const names = { YM: 'YM Dow Jones futures', NQ: 'NQ Nasdaq futures', ES: 'ES S&P 500 futures', RTY: 'RTY Russell 2000 futures' };
-    return names[m] || m;
+    return { YM:'YM Dow Jones futures', NQ:'NQ Nasdaq futures', ES:'ES S&P 500 futures', RTY:'RTY Russell 2000 futures' }[m];
   }
 
   async function analyzeChart() {
@@ -806,10 +764,7 @@
     const apiKey = localStorage.getItem('apex_api_key');
     if (!apiKey) { showSettings(); return; }
 
-    const mktName = getMarketName(selectedMarket);
-    const maxStopTicks = maxStop[selectedMarket];
     const tv = tickValue[selectedMarket];
-
     document.getElementById('loading').classList.add('active');
     document.getElementById('analyzeBtn').disabled = true;
     document.getElementById('signalCard').classList.remove('active');
@@ -818,44 +773,68 @@
     const base64 = currentImage.split(',')[1];
     const mediaType = currentImage.split(';')[0].split(':')[1];
 
-    const prompt = `You are an elite futures trading assistant for ${mktName}.
+    const prompt = `You are an elite professional futures trader analyzing ${getMarketName(selectedMarket)}.
 
-Analyze this TradingView chart screenshot carefully.
+Analyze this TradingView chart like a professional trading desk would. Be specific and detailed.
 
-WHAT TO LOOK FOR:
-- BOS (Break of Structure) — bullish or bearish
-- CHoCH (Change of Character) — momentum shift
-- Order blocks — red resistance, green support
-- EMA direction — up or down
-- Volume confirmation
+ANALYZE THESE ELEMENTS:
+- Market structure: BOS, CHoCH, swing highs/lows
+- Order blocks: key supply/demand zones
+- EMA alignment (9, 21, 50 EMAs)  
+- VWAP position (above/below/at)
+- Volume analysis
 - Premium vs discount zones
-- Overall chart sentiment — who is in control buyers or sellers
+- Momentum direction
+- Overall trend on this timeframe
 
-TIGHT STOP RULES:
-- Maximum stop loss is ${maxStopTicks} ticks from entry
-- Place stop just beyond nearest order block or structure
-- NEVER suggest a stop larger than ${maxStopTicks} ticks
-- Target must be at least 2x the stop distance
+STRICT RULES:
+- Tight stop only — max 40 ticks from entry
+- 3 targets minimum (scale out plan)
+- Target 1 must be at least 1.5x the stop
+- Target 2 at least 2.5x the stop
+- Target 3 (runner) at least 4x the stop
+- Include specific price levels for everything
+- Include WHEN to move stop to breakeven
 
-SIGNAL RULES:
-- BUY only if: BOS bullish + discount zone + EMAs up + volume confirming
-- SELL only if: BOS bearish + premium zone + EMAs down + volume confirming  
-- WAIT if: mixed signals, choppy, or no clear setup
-
-Respond ONLY in this exact JSON format — no other text:
+Respond ONLY in this exact JSON — no other text:
 {
   "signal": "BUY" or "SELL" or "WAIT",
   "confidence": "HIGH" or "MEDIUM" or "LOW",
-  "entry": "price as number only",
-  "target": "price as number only",
-  "stop": "price as number only",
-  "stop_ticks": "number of ticks for stop",
-  "target_ticks": "number of ticks for target",
-  "buyers_pct": "estimated % of buyers in market 0-100",
-  "sellers_pct": "estimated % of sellers in market 0-100",
-  "sentiment": "STRONGLY BULLISH or BULLISH or NEUTRAL or BEARISH or STRONGLY BEARISH",
-  "summary": "One clear sentence explaining signal",
-  "reasons": ["reason 1", "reason 2", "reason 3"]
+  "bias": "Bullish - Break of structure + EMA reclaim" (describe the bias),
+  "entry": "exact price",
+  "trigger": "exact trigger price",
+  "trigger_desc": "e.g. Wait for 5m close above 47,200",
+  "stop": "exact stop price",
+  "stop_desc": "e.g. Below last order block at 47,150",
+  "stop_ticks": 25,
+  "target1": "exact price",
+  "target1_ticks": 40,
+  "target2": "exact price", 
+  "target2_ticks": 70,
+  "target3": "exact price",
+  "target3_ticks": 110,
+  "buyers_pct": 60,
+  "sellers_pct": 40,
+  "sentiment": "BULLISH",
+  "trend": "Bullish ↑",
+  "vwap": "Price above VWAP",
+  "ema_signal": "9 EMA > 21 EMA",
+  "volume": "High volume",
+  "why_trade": [
+    "5m breakout candle with full-body close above structure",
+    "9/21 EMA bullish cross with slope up",
+    "VWAP reclaimed — buyers in control",
+    "Market structure shifted to higher highs",
+    "Strong impulse indicating continuation potential"
+  ],
+  "trade_management": [
+    "Move stop to breakeven after Target 1 hit",
+    "Scale out 50% at Target 1",
+    "Scale out 25% at Target 2",
+    "Let remaining 25% run to Target 3",
+    "Exit fully if price closes below trigger level"
+  ],
+  "exit_condition": "Exit immediately if price closes below [specific price] on 5m candle"
 }`;
 
     try {
@@ -869,7 +848,7 @@ Respond ONLY in this exact JSON format — no other text:
         },
         body: JSON.stringify({
           model: 'claude-sonnet-4-20250514',
-          max_tokens: 700,
+          max_tokens: 1000,
           messages: [{
             role: 'user',
             content: [
@@ -882,80 +861,112 @@ Respond ONLY in this exact JSON format — no other text:
 
       const data = await response.json();
       if (data.error) throw new Error(data.error.message);
-
       const text = data.content[0].text;
       const clean = text.replace(/```json|```/g, '').trim();
       const result = JSON.parse(clean);
-
       displaySignal(result, tv);
       saveHistory(result);
 
     } catch (err) {
-      const errBox = document.getElementById('errorBox');
-      errBox.textContent = '❌ ' + err.message;
-      errBox.classList.add('active');
+      document.getElementById('errorBox').textContent = '❌ ' + err.message;
+      document.getElementById('errorBox').classList.add('active');
     } finally {
       document.getElementById('loading').classList.remove('active');
       document.getElementById('analyzeBtn').disabled = false;
     }
   }
 
-  function displaySignal(result, tv) {
-    const card = document.getElementById('signalCard');
-    const signal = result.signal;
-    card.className = 'signal-card active ' + signal.toLowerCase();
+  function calcProfit(ticks, tv) {
+    return '$' + (ticks * tv).toFixed(0);
+  }
 
-    // Signal + confidence
+  function displaySignal(r, tv) {
+    const card = document.getElementById('signalCard');
+    const signal = r.signal;
+    card.className = 'signal-card active';
+
+    // Main signal
+    const main = document.getElementById('signalMain');
+    main.className = 'signal-main ' + signal.toLowerCase();
     const icons = { BUY: '🟢 BUY', SELL: '🔴 SELL', WAIT: '⚠️ WAIT' };
     document.getElementById('signalBadge').textContent = icons[signal];
-    document.getElementById('confidenceBadge').textContent = result.confidence;
+    document.getElementById('confidenceBadge').textContent = r.confidence;
+    document.getElementById('biasText').textContent = r.bias || '—';
 
-    // Sentiment bar
-    const buyPct = parseInt(result.buyers_pct) || 50;
-    const sellPct = parseInt(result.sellers_pct) || 50;
-    document.getElementById('buyPct').textContent = `BUYERS ${buyPct}%`;
-    document.getElementById('sellPct').textContent = `SELLERS ${sellPct}%`;
-    document.getElementById('sentimentFill').style.width = buyPct + '%';
-    document.getElementById('sentimentDesc').textContent = result.sentiment || '—';
+    // Sentiment
+    const bp = parseInt(r.buyers_pct) || 50;
+    const sp = parseInt(r.sellers_pct) || 50;
+    document.getElementById('buyPct').textContent = `BUYERS ${bp}%`;
+    document.getElementById('sellPct').textContent = `SELLERS ${sp}%`;
+    document.getElementById('sentimentFill').style.width = bp + '%';
+    document.getElementById('sentimentDesc').textContent = r.sentiment || '—';
 
-    // Levels
-    document.getElementById('entryVal').textContent = result.entry || '—';
-    document.getElementById('targetVal').textContent = result.target || '—';
-    document.getElementById('stopVal').textContent = result.stop || '—';
+    // Entry zone
+    document.getElementById('entryVal').textContent = r.entry || '—';
+    document.getElementById('triggerVal').textContent = r.trigger || '—';
+    document.getElementById('triggerDesc').textContent = r.trigger_desc || 'Wait for confirmation';
+    document.getElementById('stopVal').textContent = r.stop || '—';
+    document.getElementById('stopDesc').textContent = r.stop_desc || '—';
 
-    // Risk/Reward in dollars
-    const stopTicks = parseInt(result.stop_ticks) || 0;
-    const targetTicks = parseInt(result.target_ticks) || 0;
-    const riskDollars = stopTicks * tv;
-    const rewardDollars = targetTicks * tv;
-    const ratio = stopTicks > 0 ? (targetTicks / stopTicks).toFixed(1) : '—';
+    // Targets
+    const st = parseInt(r.stop_ticks) || 0;
+    document.getElementById('t1Price').textContent = r.target1 || '—';
+    document.getElementById('t1Ticks').textContent = (r.target1_ticks || 0) + ' ticks';
+    document.getElementById('t1Profit').textContent = calcProfit(r.target1_ticks || 0, tv);
 
-    document.getElementById('riskVal').textContent = riskDollars > 0 ? `$${riskDollars}` : '—';
-    document.getElementById('rewardVal').textContent = rewardDollars > 0 ? `$${rewardDollars}` : '—';
-    document.getElementById('rrVal').textContent = ratio !== '—' ? `1:${ratio}` : '—';
+    document.getElementById('t2Price').textContent = r.target2 || '—';
+    document.getElementById('t2Ticks').textContent = (r.target2_ticks || 0) + ' ticks';
+    document.getElementById('t2Profit').textContent = calcProfit(r.target2_ticks || 0, tv);
 
-    // Summary + reasons
-    document.getElementById('signalSummary').textContent = result.summary || '';
-    const list = document.getElementById('signalReasons');
-    list.innerHTML = '';
-    (result.reasons || []).forEach(r => {
-      const li = document.createElement('li');
-      li.textContent = r;
-      list.appendChild(li);
-    });
+    document.getElementById('t3Price').textContent = r.target3 || '—';
+    document.getElementById('t3Ticks').textContent = (r.target3_ticks || 0) + ' ticks';
+    document.getElementById('t3Profit').textContent = calcProfit(r.target3_ticks || 0, tv);
 
-    document.getElementById('signalTime').textContent = new Date().toLocaleTimeString();
+    // RR
+    const risk = st * tv;
+    const reward = (parseInt(r.target3_ticks) || 0) * tv;
+    const ratio = st > 0 ? (reward / risk).toFixed(1) : '—';
+    document.getElementById('riskVal').textContent = risk > 0 ? '$' + risk : '—';
+    document.getElementById('rewardVal').textContent = reward > 0 ? '$' + reward : '—';
+    document.getElementById('rrVal').textContent = ratio !== '—' ? '1:' + ratio : '—';
+
+    // Why this trade
+    const whyList = document.getElementById('whyList');
+    const icons2 = ['📌', '📈', '💡', '🔥', '⚡'];
+    whyList.innerHTML = (r.why_trade || []).map((w, i) => `
+      <div class="reason-item">
+        <span class="reason-icon">${icons2[i] || '•'}</span>
+        <span>${w}</span>
+      </div>
+    `).join('');
+
+    // Trade management
+    const mgmtList = document.getElementById('mgmtList');
+    mgmtList.innerHTML = (r.trade_management || []).map(m => `
+      <div class="mgmt-item">
+        <div class="mgmt-bullet"></div>
+        <span>${m}</span>
+      </div>
+    `).join('');
+
+    // Market conditions
+    document.getElementById('trendVal').textContent = r.trend || '—';
+    document.getElementById('vwapVal').textContent = r.vwap || '—';
+    document.getElementById('emaVal').textContent = r.ema_signal || '—';
+    document.getElementById('volVal').textContent = r.volume || '—';
+
+    // Exit condition
+    document.getElementById('exitCondition').textContent = r.exit_condition || '—';
+
+    document.getElementById('signalTime').textContent = '⏰ ' + new Date().toLocaleTimeString();
     card.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  function saveHistory(result) {
+  function saveHistory(r) {
     const entry = {
-      signal: result.signal,
-      confidence: result.confidence,
-      market: selectedMarket,
-      sentiment: result.sentiment,
-      buyers: result.buyers_pct,
-      sellers: result.sellers_pct,
+      signal: r.signal, confidence: r.confidence,
+      market: selectedMarket, sentiment: r.sentiment,
+      buyers: r.buyers_pct, sellers: r.sellers_pct,
       time: new Date().toLocaleTimeString()
     };
     signalHistory.unshift(entry);
@@ -965,18 +976,17 @@ Respond ONLY in this exact JSON format — no other text:
   }
 
   function renderHistory() {
-    if (signalHistory.length === 0) return;
+    if (!signalHistory.length) return;
     document.getElementById('historySection').style.display = 'block';
-    const list = document.getElementById('historyList');
-    list.innerHTML = signalHistory.map(h => `
+    document.getElementById('historyList').innerHTML = signalHistory.map(h => `
       <div class="history-item">
         <div>
           <div class="history-signal history-${h.signal.toLowerCase()}">${h.signal}</div>
-          <div style="font-size:10px;color:var(--muted);margin-top:2px">${h.market} · ${h.confidence} · ${h.sentiment || ''}</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px">${h.market} · ${h.confidence} · ${h.sentiment||''}</div>
         </div>
         <div class="history-meta">
-          <div style="color:var(--green)">${h.buyers || 0}% buy</div>
-          <div style="color:var(--red)">${h.sellers || 0}% sell</div>
+          <div style="color:var(--green)">${h.buyers||0}% buy</div>
+          <div style="color:var(--red)">${h.sellers||0}% sell</div>
           <div style="margin-top:2px">${h.time}</div>
         </div>
       </div>
